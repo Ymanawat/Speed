@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbxbhugxfbxes"]
+
+[ext_resource type="Script" path="res://Scenes/Car.gd" id="1_48e1c"]
+[ext_resource type="PackedScene" uid="uid://b35smniox7mlk" path="res://assets/Cars/wheel.fbx" id="2_lw5d4"]
+[ext_resource type="PackedScene" uid="uid://b73gpfemqq40w" path="res://assets/Cars/Car2/car.glb" id="3_30d7x"]
+[ext_resource type="AudioStream" uid="uid://cjj4yul2f4lar" path="res://assets/audio/car_engine.wav" id="4_jvl1g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4dm0y"]
+size = Vector3(2.68061, 1.48822, 6.46198)
+
+[node name="Car" type="Node3D"]
+
+[node name="VehicleBody3D" type="VehicleBody3D" parent="."]
+mass = 2000.0
+script = ExtResource("1_48e1c")
+
+[node name="car" parent="VehicleBody3D" instance=ExtResource("3_30d7x")]
+
+[node name="front_left_wheel" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.31114, 0.0161847, 1.67951)
+use_as_steering = true
+
+[node name="wheel" parent="VehicleBody3D/front_left_wheel" instance=ExtResource("2_lw5d4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50382, 0)
+
+[node name="front_right_wheel" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.24252, 0.0162912, 1.67608)
+use_as_steering = true
+
+[node name="wheel2" parent="VehicleBody3D/front_right_wheel" instance=ExtResource("2_lw5d4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.488961, 0)
+
+[node name="back_left_wheel" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30803, 0.0251816, -2.04398)
+use_as_traction = true
+
+[node name="wheel" parent="VehicleBody3D/back_left_wheel" instance=ExtResource("2_lw5d4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.492453, 0)
+
+[node name="back_right_wheel" type="VehicleWheel3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2595, 0.0268395, -2.04894)
+use_as_traction = true
+
+[node name="wheel" parent="VehicleBody3D/back_right_wheel" instance=ExtResource("2_lw5d4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.492453, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="VehicleBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.272917, 0)
+shape = SubResource("BoxShape3D_4dm0y")
+
+[node name="camera" type="Camera3D" parent="VehicleBody3D"]
+transform = Transform3D(-1, 2.26267e-08, -8.44439e-08, 0, 0.965926, 0.258819, 8.74228e-08, 0.258819, -0.965926, -0.000289917, 2.63249, -6.18518)
+current = true
+far = 10000.0
+
+[node name="engine_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jvl1g")
+volume_db = 1.0
